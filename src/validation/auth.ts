@@ -14,7 +14,7 @@ export const formSchema : any = z.object({
         .min(2, {
             message: "닉네임은 2자리 이상이어야 합니다."
         })
-        .min(12, {
+        .max(12, {
             message: "닉네임은 12자리 이하여야 합니다."
         }),
     id: z
