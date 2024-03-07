@@ -79,7 +79,9 @@ export default function SignUp() {
       });
       return;
     }
-    alert(JSON.stringify(formData, null, 4));
+    localStorage.setItem("userInfo", JSON.stringify(formData));
+    alert("회원가입이 완료되었습니다!");
+    window.location.href = "/login";
   };
 
   return (
