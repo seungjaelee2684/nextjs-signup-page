@@ -52,7 +52,7 @@ export default function SignUp() {
 
   console.log("입력값 => ", form.watch("username"));
 
-  const onSubmit = (data: registerInputType) => { // 비밀번호 확인 작업
+  const onSubmit = async (data: registerInputType) => { // 비밀번호 확인 작업
     const {
       username,
       nickname,
@@ -80,7 +80,11 @@ export default function SignUp() {
       return;
     }
     localStorage.setItem("userInfo", JSON.stringify(formData));
-    alert("회원가입이 완료되었습니다!");
+    toast({
+      title: "회원가입이 완료되었습니다.",
+      variant: "default",
+      duration: 1500,
+    });
     window.location.href = "/login";
   };
 
