@@ -22,9 +22,11 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
-import { formSchema } from "@/validation/auth"
+import { loginFormSchema } from "@/validation/auth"
 import { useToast } from "@/components/ui/use-toast"
 import { useEffect, useState } from "react"
+
+type LoginFormType = z.infer<typeof loginFormSchema>;
 
 export default function LoginPage() {
 
@@ -36,36 +38,35 @@ export default function LoginPage() {
         if (local) {
             const user = JSON.parse(local);
             setUserInfoDto(user);
-            console.log(userInfoDto);
+            console.log("test", userInfoDto);
         };
     }, []);
 
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<LoginFormType>({
+        resolver: zodResolver(loginFormSchema),
         defaultValues: {
-            id: "",
-            password: ""
+            userId: "",
+            userPassword: ""
         }
     });
-    console.log("입력값 => ", form.watch());
 
-    const onSubmitHandler = (data: z.infer<typeof formSchema>) => {
-        const { id, password } = data;
+    const onSubmit = (data: LoginFormType) => {
+        const { userId, userPassword } = data;
 
-        if ((userInfoDto?.id !== id) || (userInfoDto?.password !== password)) {
+        if ((userInfoDto?.id !== userId) || (userInfoDto?.password !== userPassword)) {
             toast({
                 title: "로그인 정보가 올바르지 않습니다.",
                 variant: "destructive",
                 duration: 1000,
             })
-            return;
+        } else {
+            toast({
+                title: "로그인이 완료되었습니다.",
+                variant: "default",
+                duration: 1000,
+            })
         }
-        toast({
-            title: "로그인이 완료되었습니다.",
-            variant: "default",
-            duration: 1000,
-        })
     };
 
     return (
@@ -77,10 +78,10 @@ export default function LoginPage() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmitHandler)} className="space-y-5">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                             <FormField
                                 control={form.control}
-                                name="id"
+                                name="userId"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>아이디</FormLabel>
@@ -93,7 +94,7 @@ export default function LoginPage() {
                             />
                             <FormField
                                 control={form.control}
-                                name="password"
+                                name="userPassword"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>비밀번호</FormLabel>
