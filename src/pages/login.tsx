@@ -60,7 +60,7 @@ export default function LoginPage() {
             })
         } else {
             toast({
-                title: "로그인이 완료되었습니다.",
+                title: `어서오세요, ${userInfoDto?.nickname}`,
                 variant: "default",
                 duration: 1000,
             })
