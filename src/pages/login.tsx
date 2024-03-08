@@ -60,9 +60,9 @@ export default function LoginPage() {
             })
         } else {
             toast({
-                title: `어서오세요, ${userInfoDto?.nickname}`,
+                title: `어서오세요, ${userInfoDto?.nickname}님!`,
                 variant: "default",
-                duration: 1000,
+                duration: 2000,
             })
         }
     };

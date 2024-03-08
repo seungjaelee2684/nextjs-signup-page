@@ -78,11 +78,7 @@ export default function SignUp() {
       return;
     }
     localStorage.setItem("userInfo", JSON.stringify(formData));
-    toast({
-      title: "회원가입이 완료되었습니다.",
-      variant: "default",
-      duration: 1500,
-    });
+    alert("회원가입이 완료되었습니다.");
     window.location.href = "/login";
   };
 
