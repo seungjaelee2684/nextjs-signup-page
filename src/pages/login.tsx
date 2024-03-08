@@ -38,10 +38,8 @@ export default function LoginPage() {
         if (local) {
             const user = JSON.parse(local);
             setUserInfoDto(user);
-            console.log("test", userInfoDto);
         };
     }, []);
-
 
     const form = useForm<LoginFormType>({
         resolver: zodResolver(loginFormSchema),

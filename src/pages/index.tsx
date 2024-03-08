@@ -50,8 +50,6 @@ export default function SignUp() {
     }
   });
 
-  console.log("입력값 => ", form.watch("username"));
-
   const onSubmit = async (data: registerInputType) => { // 비밀번호 확인 작업
     const {
       username,
