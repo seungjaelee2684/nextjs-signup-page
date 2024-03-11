@@ -30,12 +30,15 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import DaumPostcode from 'react-daum-postcode';
 
 type registerInputType = z.infer<typeof formSchema>;
 
 export default function SignUp() {
 
   const { toast } = useToast();
+  const [openPostcode, setOpenPostcode] = useState<boolean>(false);
 
   const form = useForm<registerInputType>({
     resolver: zodResolver(formSchema),
@@ -46,10 +49,24 @@ export default function SignUp() {
       email: "",
       select: "",
       location: "",
+      detailLocation: "",
       password: "",
       confirmPassword: ""
     }
   });
+
+  const handle = {
+    // 버튼 클릭 이벤트
+    clickButton: () => {
+      setOpenPostcode(current => !current);
+    },
+
+    // 주소 선택 이벤트
+    selectAddress: (data: any) => {
+      form.setValue('location', data.address);
+      setOpenPostcode(false);
+    },
+  }
 
   const onSubmit = async (data: registerInputType) => { // 비밀번호 확인 작업
     const {
@@ -59,6 +76,7 @@ export default function SignUp() {
       email,
       select,
       location,
+      detailLocation,
       password,
       confirmPassword
     } = data;
@@ -67,6 +85,7 @@ export default function SignUp() {
       nickname,
       id,
       email: email + select,
+      location: location + " " + detailLocation,
       password,
       confirmPassword
     }
@@ -89,13 +108,12 @@ export default function SignUp() {
       <Card className={cn("w-[450px]")}>
         <CardHeader>
           <CardTitle>계정 등록하기</CardTitle>
-          <CardDescription>승재의 세상으로 빠져들기 위한 준비가 필요해요!</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-3">
+              className="space-y-2">
               <FormField
                 control={form.control}
                 name="id"
@@ -103,7 +121,7 @@ export default function SignUp() {
                   <FormItem>
                     <FormLabel>아이디</FormLabel>
                     <FormControl>
-                      <Input placeholder="sparta1234" {...field} />
+                      <Input placeholder="next1234" {...field} />
                     </FormControl>
                     <FormDescription>
                       <FormMessage />
@@ -163,7 +181,7 @@ export default function SignUp() {
                   <FormItem>
                     <FormLabel>닉네임</FormLabel>
                     <FormControl>
-                      <Input placeholder="스파르타" {...field} />
+                      <Input placeholder="개발노예" {...field} />
                     </FormControl>
                     <FormDescription>
                       <FormMessage />
@@ -179,7 +197,7 @@ export default function SignUp() {
                     <FormLabel>이메일</FormLabel>
                     <div className={"flex gap-2"}>
                       <FormControl>
-                        <Input placeholder="sparta242" {...field} />
+                        <Input placeholder="next242" {...field} />
                       </FormControl>
                       <FormDescription>
                         @
@@ -221,8 +239,25 @@ export default function SignUp() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>주소</FormLabel>
+                    <div className="flex gap-3">
+                      <FormControl>
+                        <Input placeholder="지역주소" {...field} />
+                      </FormControl>
+                      <Button variant="outline" onClick={handle.clickButton}>주소찾기</Button>
+                    </div>
+                    <FormDescription>
+                      <FormMessage />
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="detailLocation"
+                render={({ field }) => (
+                  <FormItem>
                     <FormControl>
-                      <Input placeholder="서울시" {...field} />
+                      <Input placeholder="상세주소" {...field} />
                     </FormControl>
                     <FormDescription>
                       <FormMessage />
@@ -230,6 +265,14 @@ export default function SignUp() {
                   </FormItem>
                 )}
               />
+              {openPostcode &&
+              <div className="absolute top-20 left-20">
+                <DaumPostcode
+                  onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
+                  autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+                  defaultQuery='' // 팝업을 열때 기본적으로 입력되는 검색어 
+                />
+                </div>}
               <div className="flex justify-start gap-10">
                 <Button className="bg-blue-400 text-white hover:bg-blue-300" type="submit">
                   계정 등록하기
