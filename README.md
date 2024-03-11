@@ -1,4 +1,4 @@
-> # 로그인, 회원가입 및 결제시스템 <with: Next.js>
+> # 회원가입, 로그인 및 결제시스템 <with: Next.js>
 
 [SeungJae`s World](https://seungjaeworld.vercel.app/)
 
@@ -13,13 +13,13 @@
 
 > ## 🖥 Systems
 
-[로그인과 회원가입](#loginSignup)
+[회원가입과 로그인](#loginSignup)
 <br />
 [결제 시스템](#payment)
 
 <br />
 
-## <a id="loginSignup">🧮 라이브러리(로그인, 회원가입)</a>
+## <a id="loginSignup">📚 라이브러리(회원가입, 로그인)</a>
 
 1. shadcn-ui
 2. zod
@@ -63,12 +63,59 @@
 
 <br />
 
-> ## <a id="payment">🧮 라이브러리(결제 시스템)</a>
+## <a id="payment">💳 결제 시스템 구상</a>
 
-1. shadcn-ui
+1. 결제 시스템에 필요한 기능 나열
+2. shadcn-ui를 이용한 기능별 디자인 구상
+3. 기능에 알맞은 mockup data 디자인 및 기능 구상
+
+<br />
+
+### 결제 시스템에 필요한 기능
+
+* 주문 상품의 정보
+* 주문자 정보
+* 배송 정보
+* 쿠폰 및 포인트 적용
+* 결제 금액
+* 결제 방법
 
 <br />
 
 ### shadcn-ui 기능별 정리
 
-1. **주문 상품의 정보**: Card, Input
+1. **주문 상품의 정보**
+   * Card, Label
+2. **주문자 정보**
+   * Card, Label, Button
+3. **배송 정보**
+   * Card, Label, Button, Select, Form
+4. **쿠폰 및 포인트 적용 정보**
+   * Card, Label, Button, Select, Form, Input
+5. **결제 금액**
+   * Card, Label, Table
+6. **결제 방법**
+   * Card, Label, Button, Select, Form, Radio Group, Checkbox
+
+<br />
+
+### Mockup Data
+
+|종류|형태|
+|------|---|
+|**판매상품**|productId, name, detail, price|
+|**주문자**|userId, id, name, nickname, email, location, password, coupon, point|
+|**쿠폰**|couponId, status|
+
+<br />
+
+***
+
+1. 이전 구현한 회원가입에서 주소정보 추가하기
+2. 카카오주소 API를 이용해 원하는 주소를 직접 검색해서 넣게끔 기능 구현(이번 주 안에 구현할 수 있을지는 미지수, 만약 오래걸리겠다 싶으면 빠르게 포기)
+3. mockup data를 json파일에 만들기
+4. 회원가입을 성공하면 포인트 및 쿠폰 선물 구현
+5. shadcn-ui를 이용한 전반적인 페이지 디자인 마크업하기
+6. 쿠폰, 포인트 적용해 결제금액 변동 기능 구현
+7. 토스 페이먼츠 연동
+8. 결제 시스템을 구현하려면 필수적으로 회원의 정보가 필요하기 때문에 이전 회원가입과 로그인을 수정해 사용할 예정, 배포는 이미 되어있음.
