@@ -33,7 +33,15 @@ export const formSchema : any = z.object({
             message: "이메일을 선택해주세요."
         }),
     location: z
-        .string(),
+        .string()
+        .min(1, {
+            message: "주소를 입력해주세요."
+        }),
+    detailLocation: z
+        .string()
+        .min(1, {
+            message: "상세주소를 입력해주세요."
+        }),
     password: z
         .string()
         .min(6, "비밀번호는 최소 6자리 이상이어야 합니다.")
