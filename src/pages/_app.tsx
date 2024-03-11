@@ -6,9 +6,9 @@ import { Toaster } from "@/components/ui/toaster";
 
 export default function App({ Component, pageProps }: AppProps) {
 
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    import('../mocks');
-  }
+  // if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  //   import('../mocks');
+  // }
 
   return (
     //ThemeProvider로 컴포넌트들을 감쌈으로 다크모드설정을 바꿀수 있게 한다.
