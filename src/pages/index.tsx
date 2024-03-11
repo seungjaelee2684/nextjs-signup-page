@@ -45,6 +45,7 @@ export default function SignUp() {
       id: "",
       email: "",
       select: "",
+      location: "",
       password: "",
       confirmPassword: ""
     }
@@ -57,6 +58,7 @@ export default function SignUp() {
       id,
       email,
       select,
+      location,
       password,
       confirmPassword
     } = data;
@@ -94,6 +96,51 @@ export default function SignUp() {
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-3">
+              <FormField
+                control={form.control}
+                name="id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>아이디</FormLabel>
+                    <FormControl>
+                      <Input placeholder="sparta1234" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      <FormMessage />
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>비밀번호</FormLabel>
+                    <FormControl>
+                      <Input type={"password"} {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      <FormMessage />
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>비밀번호 확인</FormLabel>
+                    <FormControl>
+                      <Input type={"password"} {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      <FormMessage />
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="username"
@@ -170,42 +217,12 @@ export default function SignUp() {
               />
               <FormField
                 control={form.control}
-                name="id"
+                name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>아이디</FormLabel>
+                    <FormLabel>주소</FormLabel>
                     <FormControl>
-                      <Input placeholder="sparta1234" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      <FormMessage />
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>비밀번호</FormLabel>
-                    <FormControl>
-                      <Input type={"password"} {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      <FormMessage />
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>비밀번호 확인</FormLabel>
-                    <FormControl>
-                      <Input type={"password"} {...field} />
+                      <Input placeholder="서울시" {...field} />
                     </FormControl>
                     <FormDescription>
                       <FormMessage />
