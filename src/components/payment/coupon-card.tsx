@@ -67,8 +67,8 @@ export function Coupon({
               </FormItem>
             )}
           />
-          <Label htmlFor="name">point</Label>
-          <CardDescription>detail</CardDescription>
+          <Label htmlFor="name">보유 포인트 2,300</Label>
+          <CardDescription>5,000 포인트 이상 보유 및 10,000원 이상 구매시 사용 가능</CardDescription>
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
