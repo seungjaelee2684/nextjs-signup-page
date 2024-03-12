@@ -13,9 +13,14 @@ import { useForm } from "react-hook-form"
 export default function PaymentPage() {
 
   const form = useForm({
-    resolver: zodResolver(saleSchema),
     defaultValues: {
-
+      name: "홍길동",
+      phone: "",
+      location: "",
+      shippingMemo: "",
+      paymentPrice: 0,
+      paymentMethod: "신용카드",
+      accountNumber: ""
     }
   });
 
@@ -28,13 +33,13 @@ export default function PaymentPage() {
       w-[800px]">
       <Form {...form}>
         <form className="flex flex-col gap-5">
-          <ProductInfo className="rounded-none" />
-          <UserInfo className="rounded-none" />
-          <LocationInfo className="rounded-none" />
-          <Coupon className="rounded-none" />
+          <ProductInfo className="rounded-none" form={form} />
+          <UserInfo className="rounded-none" form={form} />
+          <LocationInfo className="rounded-none" form={form} />
+          <Coupon className="rounded-none" form={form} />
           <div className="flex gap-2">
-            <PaymentPrice className="rounded-none w-[50%]" />
-            <PaymentMethod className="rounded-none w-[50%]" />
+            <PaymentPrice className="rounded-none w-[50%]" form={form} />
+            <PaymentMethod className="rounded-none w-[50%]" form={form} />
           </div>
           <Button
             className="rounded-none

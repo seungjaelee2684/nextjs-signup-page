@@ -21,7 +21,10 @@ import {
 export function PaymentPrice({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: any) {
+
+  const { form } = props;
+
   return (
     <Card className={className} {...props}>
       <CardHeader>
