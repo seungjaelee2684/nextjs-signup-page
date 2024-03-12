@@ -11,7 +11,10 @@ import { Label } from "../ui/label";
 export function ProductInfo({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: any) {
+
+  const { form } = props;
+
   return (
     <Card className={className} {...props}>
       <CardHeader>

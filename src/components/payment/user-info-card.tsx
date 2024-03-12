@@ -18,11 +18,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { FormControl, FormDescription, FormLabel, FormField, FormItem, FormMessage } from "../ui/form";
 
 export function UserInfo({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: any) {
+
+  const { form } = props;
+  const nameForm = form.getValues("name");
 
   return (
     <Card className={className} {...props}>
@@ -32,7 +36,7 @@ export function UserInfo({
       <CardContent className="flex justify-between">
         <div className="flex flex-col gap-3">
           <Label htmlFor="name">
-            홍길동 (개발노예 님)
+            {nameForm} (개발노예 님)
           </Label>
           <CardDescription>phone</CardDescription>
           <CardDescription>email</CardDescription>
@@ -47,14 +51,18 @@ export function UserInfo({
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  이름
-                </Label>
-                <Input
-                  id="name"
-                  defaultValue="홍길동"
-                  className="col-span-3"
-                />
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>이름</FormLabel>
+                    <FormControl>
+                    <Input {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
               </div>
             </div>
             <DialogFooter>

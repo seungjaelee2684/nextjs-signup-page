@@ -29,7 +29,10 @@ import { Input } from "../ui/input";
 export function LocationInfo({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: any) {
+
+  const { form } = props;
+
   return (
     <Card className={className} {...props}>
       <CardHeader>
