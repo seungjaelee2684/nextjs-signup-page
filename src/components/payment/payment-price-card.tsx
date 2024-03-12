@@ -18,7 +18,6 @@ export function PaymentPrice({
         <CardTitle>최종 결제 금액</CardTitle>
       </CardHeader>
       <CardContent className="flex gap-8">
-        <img className="w-[80px] h-[80px]" src=""/>
         <div className="flex flex-col gap-3">
           <Label htmlFor="name">Name</Label>
           <CardDescription>detail</CardDescription>

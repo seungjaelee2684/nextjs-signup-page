@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import {
     Table,
     TableBody,
@@ -20,14 +21,22 @@ export default function DemoPage() {
                     <TableHead>상품명</TableHead>
                     <TableHead>상세 정보</TableHead>
                     <TableHead className="text-right">가격</TableHead>
+                    <TableHead className="w-[120px]"></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow onClick={() => window.location.href = "/product/payment/1"}>
+                <TableRow>
                     <TableCell className="font-medium">INV001</TableCell>
                     <TableCell>Paid</TableCell>
                     <TableCell>Credit Card</TableCell>
                     <TableCell className="text-right">$250.00</TableCell>
+                    <TableCell className="text-right">
+                        <Button
+                            variant="outline"
+                            onClick={() => window.location.href = "/product/payment/1"}>
+                            구매
+                        </Button>
+                    </TableCell>
                 </TableRow>
             </TableBody>
         </Table>

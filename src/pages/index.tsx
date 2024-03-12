@@ -104,7 +104,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+    <div className="absolute -translate-x-1/2 left-1/2">
       <Card className={cn("w-[450px]")}>
         <CardHeader>
           <CardTitle>계정 등록하기</CardTitle>
@@ -266,7 +266,7 @@ export default function SignUp() {
                 )}
               />
               {openPostcode &&
-              <div className="absolute top-20 left-20">
+              <div>
                 <DaumPostcode
                   onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
                   autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
