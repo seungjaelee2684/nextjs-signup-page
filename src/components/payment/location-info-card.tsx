@@ -25,6 +25,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "../ui/input";
+import UserDto from "../../../public/userDto.json";
 
 export function LocationInfo({
   className,
@@ -32,6 +33,7 @@ export function LocationInfo({
 }: any) {
 
   const { form } = props;
+  const locationForm = form.getValues("location");
 
   return (
     <Card className={className} {...props}>
@@ -41,8 +43,7 @@ export function LocationInfo({
       <CardContent className="flex justify-between">
         <div className="flex flex-col gap-16">
           <div className="flex flex-col gap-3">
-            <Label htmlFor="name">서울특별시 서대문구 성산로7길 89-8(연혁동) 주식회사 아임웹</Label>
-            <Label>(03240)</Label>
+            <Label htmlFor="name">{locationForm}</Label>
           </div>
           <div className="flex flex-col gap-3">
             <Label>배송메모</Label>

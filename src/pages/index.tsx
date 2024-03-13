@@ -85,7 +85,7 @@ export default function SignUp() {
     const formData = {
       username,
       nickname,
-      id,
+      userId: id,
       phone,
       email: email + select,
       location: location + " " + detailLocation,
@@ -116,13 +116,11 @@ export default function SignUp() {
       ).then(data => {
         console.log(data);
         alert("회원가입이 완료되었습니다.");
-        // window.location.href = "/login";
+        window.location.href = "/login";
       });
     } catch (error) {
       console.error("Error: ", error);
     };
-    localStorage.setItem("userInfo", JSON.stringify(formData));
-    
   };
 
   return (

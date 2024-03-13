@@ -8,17 +8,26 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { saleSchema } from "@/validation/sale"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useParams } from "next/navigation"
 import { useForm } from "react-hook-form"
+import ProductDto from "../../../../../public/productDto.json";
+import UserDto from "../../../../../public/userDto.json";
+import { useState } from "react"
 
 export default function PaymentPage() {
 
+  const user = UserDto[UserDto?.length - 1];
+  const productInfo = ProductDto[0]
+  const [sales, setSales] = useState<number | undefined>(productInfo?.price);
+
   const form = useForm({
     defaultValues: {
-      name: "홍길동",
-      phone: "",
-      location: "",
+      name: user?.name,
+      location: user?.location,
       shippingMemo: "",
-      paymentPrice: 0,
+      point: 0,
+      coupon: "",
+      paymentPrice: sales,
       paymentMethod: "신용카드",
       accountNumber: ""
     }
@@ -33,13 +42,13 @@ export default function PaymentPage() {
       w-[800px]">
       <Form {...form}>
         <form className="flex flex-col gap-5">
-          <ProductInfo className="rounded-none" form={form} />
-          <UserInfo className="rounded-none" form={form} />
-          <LocationInfo className="rounded-none" form={form} />
-          <Coupon className="rounded-none" form={form} />
+          <ProductInfo className="rounded-none" form={form} productInfo={productInfo} />
+          <UserInfo className="rounded-none" form={form} productInfo={productInfo} />
+          <LocationInfo className="rounded-none" form={form} productInfo={productInfo} />
+          <Coupon className="rounded-none" sales={sales} setSales={setSales} form={form} productInfo={productInfo} />
           <div className="flex gap-2">
-            <PaymentPrice className="rounded-none w-[50%]" form={form} />
-            <PaymentMethod className="rounded-none w-[50%]" form={form} />
+            <PaymentPrice className="rounded-none w-[50%]" sales={sales} setSales={setSales} form={form} productInfo={productInfo} />
+            <PaymentMethod className="rounded-none w-[50%]" form={form}productInfo={productInfo}  />
           </div>
           <Button
             className="rounded-none
