@@ -23,7 +23,9 @@ export function PaymentPrice({
   ...props
 }: any) {
 
-  const { form } = props;
+  const { form, productInfo, sales, setSales } = props;
+  const couponData = form?.watch("coupon");
+  const pointData = form?.watch("point");
 
   return (
     <Card className={className} {...props}>
@@ -33,23 +35,24 @@ export function PaymentPrice({
       <CardContent className="flex flex-col gap-2">
         <div className="w-[300px] flex justify-between">
           <CardDescription>상품가격</CardDescription>
-          <Label>18,000원</Label>
+          <Label>{sales}원</Label>
         </div>
         <div className="w-[300px] flex justify-between">
           <CardDescription>쿠폰 할인</CardDescription>
-          <Label>-1,000원</Label>
-        </div>
-        <div className="w-[300px] flex justify-between">
-          <CardDescription>포인트 사용</CardDescription>
-          <Label>-0원</Label>
+          <Label>-{(couponData === "")
+            ? "0"
+            : (couponData === "5천원 할인쿠폰")
+              ? "5000"
+              : `${productInfo?.price * 0.3}`
+          }원</Label>
         </div>
         <div className="w-[300px] flex justify-between border-b">
-          <CardDescription>배송비</CardDescription>
-          <Label>+2,500원</Label>
+          <CardDescription>포인트 사용</CardDescription>
+          <Label>-{pointData}원</Label>
         </div>
         <div className="w-[300px] flex justify-between">
           <Label>총 결제금액</Label>
-          <Label className="text-blue-500 font-bold">18,000원</Label>
+          <Label className="text-blue-500 font-bold">{sales}원</Label>
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">

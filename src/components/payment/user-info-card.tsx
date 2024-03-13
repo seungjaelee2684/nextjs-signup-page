@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import UserDto from "../../../public/userDto.json";
 import { FormControl, FormDescription, FormLabel, FormField, FormItem, FormMessage } from "../ui/form";
 
 export function UserInfo({
@@ -27,6 +28,7 @@ export function UserInfo({
 
   const { form } = props;
   const nameForm = form.getValues("name");
+  const user = UserDto[UserDto?.length - 1];
 
   return (
     <Card className={className} {...props}>
@@ -36,10 +38,10 @@ export function UserInfo({
       <CardContent className="flex justify-between">
         <div className="flex flex-col gap-3">
           <Label htmlFor="name">
-            {nameForm} (개발노예 님)
+            {nameForm} ({user?.nickname} 님)
           </Label>
-          <CardDescription>phone</CardDescription>
-          <CardDescription>email</CardDescription>
+          <CardDescription>{user?.phone}</CardDescription>
+          <CardDescription>{user?.email}</CardDescription>
         </div>
         <Dialog>
           <DialogTrigger asChild>
