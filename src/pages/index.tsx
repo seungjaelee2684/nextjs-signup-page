@@ -47,6 +47,7 @@ export default function SignUp() {
       nickname: "",
       id: "",
       email: "",
+      phone: "",
       select: "",
       location: "",
       detailLocation: "",
@@ -74,6 +75,7 @@ export default function SignUp() {
       nickname,
       id,
       email,
+      phone,
       select,
       location,
       detailLocation,
@@ -84,10 +86,10 @@ export default function SignUp() {
       username,
       nickname,
       id,
+      phone,
       email: email + select,
       location: location + " " + detailLocation,
-      password,
-      confirmPassword
+      password
     }
 
     if (password !== confirmPassword) {
@@ -98,9 +100,29 @@ export default function SignUp() {
       });
       return;
     }
+    try {
+      await fetch("/api/users/signup", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error("Network Error");
+        };
+        return response.json();
+      }
+      ).then(data => {
+        console.log(data);
+        alert("회원가입이 완료되었습니다.");
+        // window.location.href = "/login";
+      });
+    } catch (error) {
+      console.error("Error: ", error);
+    };
     localStorage.setItem("userInfo", JSON.stringify(formData));
-    alert("회원가입이 완료되었습니다.");
-    window.location.href = "/login";
+    
   };
 
   return (
@@ -182,6 +204,21 @@ export default function SignUp() {
                     <FormLabel>닉네임</FormLabel>
                     <FormControl>
                       <Input placeholder="개발노예" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      <FormMessage />
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>연락처</FormLabel>
+                    <FormControl>
+                      <Input placeholder="01000000000" {...field} />
                     </FormControl>
                     <FormDescription>
                       <FormMessage />
