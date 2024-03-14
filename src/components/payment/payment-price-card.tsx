@@ -33,11 +33,11 @@ export function PaymentPrice({
         <CardTitle>최종 결제 금액</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <div className="w-[300px] flex justify-between">
+        <div className="flex justify-between">
           <CardDescription>상품가격</CardDescription>
           <Label>{sales}원</Label>
         </div>
-        <div className="w-[300px] flex justify-between">
+        <div className="flex justify-between">
           <CardDescription>쿠폰 할인</CardDescription>
           <Label>-{(couponData === "")
             ? "0"
@@ -46,11 +46,11 @@ export function PaymentPrice({
               : `${productInfo?.price * 0.3}`
           }원</Label>
         </div>
-        <div className="w-[300px] flex justify-between border-b">
+        <div className="flex justify-between border-b">
           <CardDescription>포인트 사용</CardDescription>
           <Label>-{pointData}원</Label>
         </div>
-        <div className="w-[300px] flex justify-between">
+        <div className="flex justify-between">
           <Label>총 결제금액</Label>
           <Label className="text-blue-500 font-bold">{sales}원</Label>
         </div>

@@ -12,13 +12,33 @@ import { useParams } from "next/navigation"
 import { useForm } from "react-hook-form"
 import ProductDto from "../../../../../public/productDto.json";
 import UserDto from "../../../../../public/userDto.json";
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import {
+  loadPaymentWidget,
+  PaymentWidgetInstance,
+  ANONYMOUS
+} from "@tosspayments/payment-widget-sdk";
+import { nanoid } from "nanoid";
+import usePaymentWidget from "../../../../components/payment/toss-payment-hook";
+
+const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY || '';
+const customerKey = nanoid();
 
 export default function PaymentPage() {
 
+  const { data: paymentWidget } = usePaymentWidget(clientKey, customerKey);
+  // const { data: paymentWidget } = usePaymentWidget(clientKey, ANONYMOUS); // 비회원 결제
+  const paymentMethodsWidgetRef = useRef<ReturnType<
+    PaymentWidgetInstance["renderPaymentMethods"]
+  > | null>(null);
+  const agreementsWidgetRef = useRef<ReturnType<
+    PaymentWidgetInstance["renderAgreement"]
+  > | null>(null);
+
+  
   const user = UserDto[UserDto?.length - 1];
   const productInfo = ProductDto[0]
-  const [sales, setSales] = useState<number | undefined>(productInfo?.price);
+  const [sales, setSales] = useState<number>(productInfo?.price);
 
   const form = useForm({
     defaultValues: {
@@ -33,6 +53,42 @@ export default function PaymentPage() {
     }
   });
 
+  useEffect(() => {
+    if (paymentWidget == null) {
+      return;
+    }
+
+    // ------  결제위젯 렌더링 ------
+    // @docs https://docs.tosspayments.com/reference/widget-sdk#renderpaymentmethods선택자-결제-금액-옵션
+    const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
+      "#payment-widget",
+      { value: sales },
+      { variantKey: "DEFAULT" }
+    );
+
+    paymentMethodsWidgetRef.current = paymentMethodsWidget;
+
+    // ------  이용약관 렌더링 ------
+    // @docs https://docs.tosspayments.com/reference/widget-sdk#renderagreement선택자-옵션
+    const agreementsWidget = paymentWidget.renderAgreement("#agreement", {
+      variantKey: "AGREEMENT",
+    });
+
+    agreementsWidgetRef.current = agreementsWidget;
+  }, [paymentWidget]);
+
+  useEffect(() => {
+    const paymentMethodsWidget = paymentMethodsWidgetRef.current;
+
+    if (paymentMethodsWidget == null) {
+      return;
+    }
+
+    // ------ 금액 업데이트 ------
+    // @docs https://docs.tosspayments.com/reference/widget-sdk#updateamount결제-금액
+    paymentMethodsWidget.updateAmount(sales);
+  }, [sales]);
+
   return (
     <div className="
       absolute
@@ -46,10 +102,9 @@ export default function PaymentPage() {
           <UserInfo className="rounded-none" form={form} productInfo={productInfo} />
           <LocationInfo className="rounded-none" form={form} productInfo={productInfo} />
           <Coupon className="rounded-none" sales={sales} setSales={setSales} form={form} productInfo={productInfo} />
-          <div className="flex gap-2">
-            <PaymentPrice className="rounded-none w-[50%]" sales={sales} setSales={setSales} form={form} productInfo={productInfo} />
-            <PaymentMethod className="rounded-none w-[50%]" form={form}productInfo={productInfo}  />
-          </div>
+          <PaymentPrice className="rounded-none" sales={sales} setSales={setSales} form={form} productInfo={productInfo} />
+          <div id="payment-widget" style={{ width: "100%" }} />
+          <div id="agreement" style={{ width: "100%" }} />
           <Button
             className="rounded-none
               mb-8
@@ -57,7 +112,28 @@ export default function PaymentPage() {
               bg-blue-600
               text-white
               hover:bg-blue-500
-              font-bold">결제하기</Button>
+              font-bold"
+              onClick={async (e) => {
+                e.preventDefault();
+                try {
+                  // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+                  // @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
+                  await paymentWidget?.requestPayment({
+                    orderId: nanoid(),
+                    orderName: productInfo?.product,
+                    customerName: UserDto[UserDto?.length - 1]?.name,
+                    customerEmail: UserDto[UserDto?.length - 1]?.email,
+                    customerMobilePhone: UserDto[UserDto?.length - 1]?.phone,
+                    successUrl: `${window.location.origin}/success`,
+                    failUrl: `${window.location.origin}/fail`,
+                  });
+                } catch (error) {
+                  // 에러 처리하기
+                  console.error(error);
+                }
+              }}>
+                결제하기
+              </Button>
         </form>
       </Form>
     </div>
