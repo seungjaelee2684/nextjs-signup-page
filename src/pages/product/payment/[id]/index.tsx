@@ -1,6 +1,5 @@
 import { Coupon } from "@/components/payment/coupon-card"
 import { LocationInfo } from "@/components/payment/location-info-card"
-import { PaymentMethod } from "@/components/payment/payment-method-card"
 import { PaymentPrice } from "@/components/payment/payment-price-card"
 import { ProductInfo } from "@/components/payment/product-info-card"
 import { UserInfo } from "@/components/payment/user-info-card"
