@@ -25,12 +25,17 @@ import { useForm } from "react-hook-form"
 import { loginFormSchema } from "@/validation/auth"
 import { useToast } from "@/components/ui/use-toast"
 import { useEffect, useState } from "react"
+import UserDto from "../../public/userDto.json";
+import fs from "fs";
+import path from "path";
 
 type LoginFormType = z.infer<typeof loginFormSchema>;
 
 export default function LoginPage() {
 
     const { toast } = useToast();
+    let jsonData = UserDto;
+    console.log(UserDto);
     const [userInfoDto, setUserInfoDto] = useState<any>();
 
     useEffect(() => {
@@ -52,7 +57,7 @@ export default function LoginPage() {
     const onSubmit = (data: LoginFormType) => {
         const { userId, userPassword } = data;
 
-        if ((userInfoDto?.id !== userId) || (userInfoDto?.password !== userPassword)) {
+        if ((UserDto[UserDto.length - 1]?.userId !== userId) || (UserDto[UserDto.length - 1]?.password !== userPassword)) {
             toast({
                 title: "로그인 정보가 올바르지 않습니다.",
                 variant: "destructive",
@@ -63,7 +68,8 @@ export default function LoginPage() {
                 title: `어서오세요, ${userInfoDto?.nickname}님!`,
                 variant: "default",
                 duration: 2000,
-            })
+            });
+            window.location.href = "/product";
         }
     };
 

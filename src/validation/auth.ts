@@ -22,6 +22,8 @@ export const formSchema : any = z.object({
         .regex(/^[a-z\d]{3,16}$/, {
             message: "아이디는 3~16자리, 영문(소문자)과 숫자조합이어야 합니다."
         }),
+    phone: z
+        .string(),
     email: z
         .string()
         .regex(/^[a-zA-Z\d]{3,}$/, {
@@ -31,6 +33,16 @@ export const formSchema : any = z.object({
         .string()
         .min(1, {
             message: "이메일을 선택해주세요."
+        }),
+    location: z
+        .string()
+        .min(1, {
+            message: "주소를 입력해주세요."
+        }),
+    detailLocation: z
+        .string()
+        .min(1, {
+            message: "상세주소를 입력해주세요."
         }),
     password: z
         .string()
